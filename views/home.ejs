@@ -4,14 +4,17 @@
         <title>Conversations</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
         <h1>Conversations</h1>
-        <ul>
-            <% for (let conversation of conversations) { %>
-            <li><%= conversation.conversationID %></li>
-            <% } %>
-        </ul>
+        <% if (conversations == '\n') { %>
+            <p> No conversations </p>
+        <% } else { %>
+            <ol>
+                <% for (let conversation of conversations) { %>
+                <li><%= conversation %></li>
+                <% } %>
+            </ol>
+        <% } %>
     </body>
 </html>

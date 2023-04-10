@@ -1,11 +1,38 @@
-fetch('http://localhost:3000/', {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
-    // cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: "same-origin", // include, *same-origin, omit
+fetch('http://localhost:3000', {
+    method: 'POST',
     headers: {
         "Content-Type": "application/json",
-        // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify({conversationID: "data"}), // body data type must match "Content-Type" header
+    body: JSON.stringify({conversationID: document.querySelector("#gwt-debug-PostViewHeader-HeaderText").textContent})
 });
+
+
+
+(async function() {
+    navigator.clipboard.writeText(document.querySelector("#gwt-debug-PostViewHeader-HeaderText").textContent)
+        .then(() => {
+            alert(`Conversation ID yanked with ${document.querySelectorAll(".GNB2KQADA-B").length} posts`)
+        })
+        .catch(() => {
+            alert('Yanked failed')
+        })
+})()
+
+
+if (document.querySelectorAll(".GNB2KQADA-B").length >= 12) {
+    fetch('http://localhost:3000', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({conversationID: document.querySelector("#gwt-debug-PostViewHeader-HeaderText").textContent})
+    })
+        .then(() => {
+                document.querySelector("#gwt-debug-PostViewHeader-HeaderText").style.color= "green"
+        })
+        .catch(() => {
+            alert('Post request failed')
+        })
+} else {
+    document.querySelector("#gwt-debug-PostViewHeader-HeaderText").style.color = "red"
+}
