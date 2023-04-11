@@ -40,6 +40,15 @@ app.post('/', async (req, res) => {
     res.redirect('/')
 })
 
+
+app.delete('/', async (req, res) => {
+    const data = fs.readFileSync('./list.txt', 'utf8')
+    if (data.length >= 1) {
+        fs.writeFileSync('./list.txt', "")
+    }
+    res.redirect('/')
+})
+
 app.listen(PORT, (req, res) => {
     console.log(`listening on port: ${PORT}`)
 })
