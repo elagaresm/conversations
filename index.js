@@ -4,6 +4,7 @@ const path = require('path')
 const methodOverride = require('method-override')
 const PORT = 3000
 const cors = require('cors')
+const { addToDatabase, readDatabase, clearDatabase } = require('./middleware/database.js')
 
 // for writing in file
 const fs = require("fs")
@@ -15,37 +16,35 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(cors())
 app.use(express.json())
 app.use(methodOverride('_method'))
-// app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
 
 
 app.get('/', async(req, res) => {
-    let data
-    try {
-        data = fs.readFileSync('./list.txt', 'utf8').split(' ').filter(id => id != '')
-    } catch {
-        console.log('cannot find file list.txt')
-    }
-    res.render('home', {conversations: data})
+    const data = readDatabase('./db.json');
+    res.render('home', {data})
 })
 
 
-app.post('/', async (req, res) => {
+app.post('/long', async (req, res) => {
     const { conversationID } = req.body
-    try {
-            fs.appendFileSync('./list.txt', conversationID + " ")
-    } catch (err) {
-        console.log('couldnt write on list.txt')
-        console.log(err)
-    }
-    res.redirect('/')
+    addToDatabase('./db.json', 'conversations', conversationID)
+    res.status(200).end()
 })
 
+app.post('/escalations', async (req, res) => {
+    const { conversationID } = req.body
+    addToDatabase('./db.json', 'escalations', conversationID)
+    res.status(200).end()
+})
 
-app.delete('/', async (req, res) => {
-    const data = fs.readFileSync('./list.txt', 'utf8')
-    if (data.length >= 1) {
-        fs.writeFileSync('./list.txt', "")
-    }
+app.post('/hide', async (req, res) => {
+    const { conversationID, reason } = req.body
+    addToDatabase('./db.json', 'hidden', {conversationID, reason})
+    res.status(200).end()
+})
+
+app.delete('/clear', async(req, res) => {
+    clearDatabase('./db.json')
     res.redirect('/')
 })
 

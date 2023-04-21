@@ -4,21 +4,53 @@
         <title>Conversations</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/home_style.css">
     </head>
     <body>
-        <h1>Conversations</h1>
-        <% if (conversations == '\n') { %>
-            <p> No conversations </p>
-        <% } else { %>
-            <ol>
-                <% for (let conversation of conversations) { %>
-                <li><%= conversation %></li>
+        <div class="main">
+            <div class="container">
+                <h1>Conversations</h1>
+                <% if (data.conversations == '\n') { %>
+                <p> No conversations </p>
+                <% } else { %>
+                <ol>
+                    <% for (let conversation of data.conversations) { %>
+                    <li><%= conversation %></li>
+                    <% } %>
+                </ol>
                 <% } %>
-            </ol>
-        <% } %>
+            </div>
 
-        <form method="POST" action="/?_method=DELETE">
-            <button type="submit">Clear</button>
+            <div class="container">
+                <h1>Escalations</h1>
+                <% if (data.escalations == '\n') { %>
+                <p> No escalations </p>
+                <% } else { %>
+                <ol>
+                    <% for (let escalations of data.escalations) { %>
+                    <li><%= escalations %></li>
+                    <% } %>
+                </ol>
+                <% } %>
+            </div>
+
+            <div class="container">
+                <h1>Hidden Conversations</h1>
+                <% if (data.hidden == '\n' || data.hidden == []) { %>
+                <p> No conversations </p>
+                <% } else { %>
+                <ol>
+                    <% for (let obj of data.hidden) { %>
+                    <li><%= obj.conversationID %> - <%= obj.reason %></li>
+                    <% } %>
+                </ol>
+                <% } %>
+            </div>
+
+        </div>
+
+        <form method="POST" action="/clear?_method=DELETE">
+            <button type="submit" id="clear">Clear</button>
         </form>
 
     </body>
