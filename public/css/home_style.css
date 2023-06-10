@@ -3,21 +3,49 @@
 }
 
 .main {
+    border: 1px solid black;
     display: flex;
-    border: 1px solid red;
+    justify-content: space-between;
+    padding: 20px;
 }
 
-.container {
-    border: 1px solid green;
-    width: 50%;
-}
 
 h1 {
-    border: 1px solid blue;
     margin: 0;
 }
 
-form, button {
+button {
     width: 100%;
-    height: 3rem;
+    font-size: 1rem;
+    padding: 15px 0;
+}
+
+
+li {
+    margin: 10px 0;
+
+    & span:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    & i:hover {
+        color: red;
+        cursor: pointer;
+    }
+}
+
+
+.container {
+
+    & a {
+
+        &:visited {
+            color: green;
+        }
+
+        & i {
+            margin-left: 0.5em;
+        }
+    }
 }

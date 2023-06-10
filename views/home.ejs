@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/home_style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body>
         <div class="main">
@@ -15,7 +16,14 @@
                 <% } else { %>
                 <ol>
                     <% for (let conversation of data.conversations) { %>
-                    <li><%= conversation %></li>
+                    <li>
+                        <span><%= conversation %></span>
+                        <a 
+                            href="<%= `https://docs.google.com/forms/d/e/1FAIpQLSdMk-TPnyWMSQJ6jqJGa5PYtk0vcx-48FthApJpET_-8fztBA/viewform?usp=pp_url&entry.1218391907=${conversation.substring(1)}&entry.15723242=Enmanuel+L&entry.1066220467=Long+Conversation` %>" 
+                            target="_blank" >
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </li>
                     <% } %>
                 </ol>
                 <% } %>
@@ -28,20 +36,34 @@
                 <% } else { %>
                 <ol>
                     <% for (let escalations of data.escalations) { %>
-                    <li><%= escalations %></li>
+                    <li>
+                        <span><%= escalations %></span>
+                        <a 
+                            href="<%= `https://docs.google.com/forms/d/e/1FAIpQLSdMk-TPnyWMSQJ6jqJGa5PYtk0vcx-48FthApJpET_-8fztBA/viewform?usp=pp_url&entry.1218391907=${escalations.substring(1)}&entry.15723242=Enmanuel+L` %>" 
+                            target="_blank" >
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </li>
                     <% } %>
                 </ol>
                 <% } %>
             </div>
 
-            <div class="container">
+            <div class="container hidden">
                 <h1>Hidden Conversations</h1>
                 <% if (data.hidden == '\n' || data.hidden == []) { %>
                 <p> No conversations </p>
                 <% } else { %>
                 <ol>
                     <% for (let obj of data.hidden) { %>
-                    <li><%= obj.conversationID %> - <%= obj.reason %></li>
+                    <li>
+                        <span><%= obj.conversationID %></span> - <%= obj.reason %>
+                        <a 
+                            href="<%= `https://docs.google.com/forms/d/e/1FAIpQLSdMk-TPnyWMSQJ6jqJGa5PYtk0vcx-48FthApJpET_-8fztBA/viewform?usp=pp_url&entry.1218391907=${obj.conversationID.substring(1)}&entry.15723242=Enmanuel+L&entry.1066220467=${obj.reason}` %>" 
+                            target="_blank" >
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+                    </li>
                     <% } %>
                 </ol>
                 <% } %>
@@ -53,5 +75,6 @@
             <button type="submit" id="clear">Clear</button>
         </form>
 
+        <script src="js/app.js"></script>
     </body>
 </html>
